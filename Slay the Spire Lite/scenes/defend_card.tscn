@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://bkgqduugm3t1w"]
+
+[ext_resource type="PackedScene" uid="uid://dunj0l01fp4ij" path="res://scenes/card.tscn" id="1_ryhhv"]
+
+[node name="DefendCard" instance=ExtResource("1_ryhhv")]
+card_name = "Defend"
+damage = 0
+block = 6
+description = "Gain 6 block"

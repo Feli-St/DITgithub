@@ -1,0 +1,57 @@
+[gd_scene load_steps=2 format=3 uid="uid://l5enogevxull"]
+
+[ext_resource type="Script" path="res://scripts/hud.gd" id="1_vtolg"]
+
+[node name="HUD" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vtolg")
+
+[node name="Energy" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -256.0
+offset_top = -11.0
+offset_right = 20.0
+offset_bottom = 136.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 40
+text = "Test"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 427.0
+offset_top = 24.0
+offset_right = 505.0
+offset_bottom = 55.0
+text = "End Turn"
+
+[node name="Draw_pile" type="Label" parent="."]
+layout_mode = 0
+offset_left = 535.0
+offset_top = 96.0
+offset_right = 575.0
+offset_bottom = 119.0
+text = "0
+"
+
+[node name="Discard_pile" type="Label" parent="."]
+layout_mode = 0
+offset_left = 625.0
+offset_top = 98.0
+offset_right = 665.0
+offset_bottom = 121.0
+text = "0"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

@@ -1,0 +1,27 @@
+[gd_scene load_steps=6 format=3 uid="uid://b6ni5hbyoii7y"]
+
+[ext_resource type="PackedScene" uid="uid://dunj0l01fp4ij" path="res://scenes/card.tscn" id="1_8bvxw"]
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_buaqu"]
+[ext_resource type="PackedScene" uid="uid://5o86s345482o" path="res://scenes/enemy.tscn" id="3_wekco"]
+[ext_resource type="PackedScene" uid="uid://bl6di4lb63lrp" path="res://scenes/player.tscn" id="4_4ce86"]
+[ext_resource type="PackedScene" uid="uid://l5enogevxull" path="res://scenes/hud.tscn" id="5_68x20"]
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_buaqu")
+
+[node name="Card" parent="." groups=["cards"] instance=ExtResource("1_8bvxw")]
+offset_left = 327.0
+offset_top = 448.0
+offset_right = 418.0
+offset_bottom = 581.0
+
+[node name="Enemy" parent="." instance=ExtResource("3_wekco")]
+position = Vector2(955, 304)
+
+[node name="Player" parent="." instance=ExtResource("4_4ce86")]
+position = Vector2(107, 203)
+
+[node name="HUD" parent="." instance=ExtResource("5_68x20")]
+
+[connection signal="card_played" from="Card" to="." method="_on_card_card_played"]
+[connection signal="enemy_defeated" from="Enemy" to="." method="_on_enemy_defeated"]

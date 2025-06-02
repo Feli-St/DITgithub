@@ -3,7 +3,9 @@ extends Control
 @export var card_name = "Strike"
 @export var cost = 1
 @export var damage = 6
+@export var block = 0
 @export var description = "Deal 6 damage"
+signal card_played(damage, block, cost)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -16,6 +18,9 @@ func _ready():
 func _process(delta):
 	pass
 
-func _on_card_clicked(event):
-	if event is InputEventMouseButton and event.buton_index == MOUSE_BUTTON_LEFT and event.pressed:
+func _on_card_clicked():
+	if GameState.use_energy(cost):
 		print("Card clicked:", card_name)
+		emit_signal("card_played", damage, block, cost, self)
+	
+

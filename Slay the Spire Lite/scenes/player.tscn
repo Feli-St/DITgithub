@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=3 uid="uid://bl6di4lb63lrp"]
+
+[ext_resource type="Script" path="res://scripts/Player.gd" id="1_mvbhk"]
+
+[node name="Player" type="Node2D"]
+position = Vector2(531, 236)
+scale = Vector2(2.48, 2.12)
+script = ExtResource("1_mvbhk")
+metadata/_edit_group_ = true
+
+[node name="Health" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = -1
+offset_right = 40.0
+offset_bottom = 66.0

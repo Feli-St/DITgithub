@@ -1,7 +1,37 @@
-[gd_scene load_steps=2 format=3 uid="uid://b6ni5hbyoii7y"]
+[gd_scene load_steps=8 format=3 uid="uid://b6ni5hbyoii7y"]
 
 [ext_resource type="PackedScene" uid="uid://dunj0l01fp4ij" path="res://scenes/card.tscn" id="1_8bvxw"]
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_buaqu"]
+[ext_resource type="PackedScene" uid="uid://5o86s345482o" path="res://scenes/enemy.tscn" id="3_wekco"]
+[ext_resource type="PackedScene" uid="uid://bl6di4lb63lrp" path="res://scenes/player.tscn" id="4_4ce86"]
+[ext_resource type="PackedScene" uid="uid://l5enogevxull" path="res://scenes/hud.tscn" id="5_68x20"]
+[ext_resource type="PackedScene" uid="uid://bkgqduugm3t1w" path="res://scenes/defend_card.tscn" id="6_0hics"]
+[ext_resource type="PackedScene" uid="uid://dxnl40xda8y63" path="res://scenes/hand_ui.tscn" id="7_qtbnc"]
 
 [node name="Game" type="Node2D"]
+script = ExtResource("1_buaqu")
+card_scenes = Array[PackedScene]([ExtResource("6_0hics"), ExtResource("6_0hics"), ExtResource("1_8bvxw"), ExtResource("6_0hics"), ExtResource("6_0hics"), ExtResource("1_8bvxw")])
 
-[node name="Card" parent="." instance=ExtResource("1_8bvxw")]
+[node name="Enemy" parent="." instance=ExtResource("3_wekco")]
+position = Vector2(955, 304)
+
+[node name="Player" parent="." instance=ExtResource("4_4ce86")]
+position = Vector2(107, 203)
+
+[node name="HUD" parent="." instance=ExtResource("5_68x20")]
+offset_left = 334.0
+offset_top = 452.0
+offset_right = 334.0
+offset_bottom = 452.0
+metadata/_edit_group_ = true
+
+[node name="Hand_ui" parent="." instance=ExtResource("7_qtbnc")]
+offset_left = 294.0
+offset_top = 219.0
+offset_right = 294.0
+offset_bottom = 219.0
+
+[connection signal="attacked" from="Enemy" to="." method="_on_enemy_attacked"]
+[connection signal="enemy_defeated" from="Enemy" to="." method="_on_enemy_defeated"]
+[connection signal="died" from="Player" to="." method="_on_player_died"]
+[connection signal="turn_ended" from="HUD" to="." method="_on_turn_ended"]
