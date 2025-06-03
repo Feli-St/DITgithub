@@ -5,6 +5,8 @@ extends Node2D
 @onready var GameState = $"/root/GameState"
 @onready var hud = $HUD
 @onready var hand_ui = $Hand_ui/HBoxContainer
+@onready var GameOverScreen = $GameOverScreen
+@onready var VictoryScreen = $VictoryScreen
 @export var card_scenes : Array[PackedScene]
 var draw_pile = []
 var hand = []
@@ -15,7 +17,7 @@ func _ready():
 		var card_instance = card_scene.instantiate()
 		card_instance.connect("card_played", _on_card_card_played)
 		draw_pile.append(card_instance)
-	draw_cards(2)
+	draw_cards(4)
 	
 func draw_cards(amount):
 	for i in range(amount):
@@ -57,7 +59,7 @@ func discard_hand():
 func add_card_to_hand_ui(card):
 	hand_ui.add_child(card)
 
-func _on_card_card_played(damage, block, cost, card):
+func _on_card_card_played(damage, block, energy, cost, cards_to_draw, card):
 	if cost - 1 <= GameState.get_current_energy():
 		if enemy:
 			if damage:
@@ -66,8 +68,14 @@ func _on_card_card_played(damage, block, cost, card):
 			if block:
 				print("Card played for ", block, " block")
 				player.apply_block(block)
+			if energy:
+				print("Card played for ", energy, "energy")
+				GameState.gain_energy(energy)
 			if cost:
 				print("Cost: ", cost)
+			if cards_to_draw:
+				print("Card played for ", cards_to_draw, "cards")
+				draw_cards(cards_to_draw)
 			discard_card(card)
 				
 	
@@ -75,11 +83,14 @@ func _on_card_card_played(damage, block, cost, card):
 
 func _on_enemy_defeated():
 	enemy = null
+	VictoryScreen.visible = true
+	get_tree().paused = true
 
 func turn_start():
 	GameState.reset_energy()
 	player.reset_block()
-	draw_cards(2)
+	draw_cards(4)
+	enemy.change_intention()
 	print(draw_pile)
 	print(hand)
 	print(discard_pile)
@@ -97,4 +108,10 @@ func _on_enemy_attacked(damage):
 
 
 func _on_player_died():
-	pass
+	GameOverScreen.visible = true
+	get_tree().paused = true
+
+
+func _on_restart_button_pressed():
+	get_tree().paused = false
+	get_tree().reload_current_scene()

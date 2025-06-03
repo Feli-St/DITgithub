@@ -3,6 +3,8 @@ extends Node2D
 @export var max_health = 50
 var current_health 
 @onready var health = $Health
+@onready var intention_text = $Intention
+var intention = randi_range(5, 20)
 
 signal enemy_defeated
 signal attacked(damage)
@@ -11,11 +13,12 @@ signal attacked(damage)
 func _ready():
 	current_health = max_health
 	health.text = str(current_health) + "/" + str(max_health)
+	intention_text.text = "Intention: " + str(intention) + " damage"
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+func change_intention():
+	intention = randi_range(5, 20)
+	intention_text.text = "Intention: " + str(intention) + " damage"
 
 func take_damage(damage):
 	current_health -= damage
@@ -33,4 +36,4 @@ func update_health():
 	
 func attack():
 	print("Enemy attacked")
-	emit_signal("attacked", 5)
+	emit_signal("attacked", intention)

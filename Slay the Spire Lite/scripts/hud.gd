@@ -16,7 +16,7 @@ func _process(delta):
 	pass
 
 func update_energy():
-	$Energy.text = str(GameState.get_current_energy())
+	$Energy.text = "Energy: " + str(GameState.get_current_energy())
 
 func _on_button_pressed():
 	emit_signal("turn_ended")

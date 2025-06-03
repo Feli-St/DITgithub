@@ -18,7 +18,7 @@ func use_energy(amount):
 		print("Not enough energy")
 		
 func gain_energy(amount):
-	current_energy = min(current_energy + amount, max_energy)
+	current_energy = current_energy + amount
 	print("Energy gained. Current energy: ", current_energy)
 	emit_signal("energy_changed")
 	

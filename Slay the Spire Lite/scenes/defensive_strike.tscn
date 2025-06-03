@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://dq1t7dpcjrbe1"]
+
+[ext_resource type="PackedScene" uid="uid://dunj0l01fp4ij" path="res://scenes/card.tscn" id="1_300m2"]
+
+[node name="DefensiveStrike" instance=ExtResource("1_300m2")]
+card_name = "Def. Strike"
+cost = 2
+damage = 10
+block = 5
+description = "Deal 10 damage and gain 5 block"

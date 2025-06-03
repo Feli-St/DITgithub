@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://ca472fdde3a4y"]
+
+[ext_resource type="PackedScene" uid="uid://dunj0l01fp4ij" path="res://scenes/card.tscn" id="1_xj4wi"]
+
+[node name="DrawCard" instance=ExtResource("1_xj4wi")]
+card_name = "Plan"
+damage = 0
+cards_to_draw = 2
+description = "Draw 2 cards"

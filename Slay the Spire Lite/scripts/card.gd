@@ -4,6 +4,8 @@ extends Control
 @export var cost = 1
 @export var damage = 6
 @export var block = 0
+@export var energy = 0
+@export var cards_to_draw = 0
 @export var description = "Deal 6 damage"
 signal card_played(damage, block, cost)
 
@@ -19,8 +21,8 @@ func _process(delta):
 	pass
 
 func _on_card_clicked():
-	if GameState.use_energy(cost):
+	if GameState.use_energy(cost):		#fix this next time please its so confusing and makes no sense like this
 		print("Card clicked:", card_name)
-		emit_signal("card_played", damage, block, cost, self)
+		emit_signal("card_played", damage, block, energy, cost, cards_to_draw, self)
 	
 

@@ -5,7 +5,6 @@
 [node name="Enemy" type="Node2D"]
 position = Vector2(483.553, 290.534)
 script = ExtResource("1_fbbn6")
-metadata/_edit_group_ = true
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchors_preset = 8
@@ -32,3 +31,10 @@ offset_right = 20.0
 offset_bottom = -53.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
+
+[node name="Intention" type="Label" parent="."]
+offset_left = -74.0
+offset_top = -144.0
+offset_right = 80.0
+offset_bottom = -121.0
+horizontal_alignment = 1
