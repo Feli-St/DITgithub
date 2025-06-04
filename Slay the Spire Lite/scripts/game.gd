@@ -60,7 +60,7 @@ func add_card_to_hand_ui(card):
 	hand_ui.add_child(card)
 
 func _on_card_card_played(damage, block, energy, cost, cards_to_draw, card):
-	if cost - 1 <= GameState.get_current_energy():
+	if cost <= GameState.get_current_energy():
 		if enemy:
 			if damage:
 				print("Card played for ", damage, " damage")
@@ -73,6 +73,7 @@ func _on_card_card_played(damage, block, energy, cost, cards_to_draw, card):
 				GameState.gain_energy(energy)
 			if cost:
 				print("Cost: ", cost)
+				GameState.use_energy(cost)
 			if cards_to_draw:
 				print("Card played for ", cards_to_draw, "cards")
 				draw_cards(cards_to_draw)

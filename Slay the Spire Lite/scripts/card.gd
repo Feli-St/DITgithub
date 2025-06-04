@@ -21,7 +21,7 @@ func _process(delta):
 	pass
 
 func _on_card_clicked():
-	if GameState.use_energy(cost):		#fix this next time please its so confusing and makes no sense like this
+	if GameState.get_current_energy() >= cost:		#fix this next time please its so confusing and makes no sense like this
 		print("Card clicked:", card_name)
 		emit_signal("card_played", damage, block, energy, cost, cards_to_draw, self)
 	
