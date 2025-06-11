@@ -7,6 +7,7 @@ extends Node2D
 @onready var hand_ui = $Hand_ui/HBoxContainer
 @onready var GameOverScreen = $GameOverScreen
 @onready var VictoryScreen = $VictoryScreen
+@onready var instructions = $Instructions
 @export var card_scenes : Array[PackedScene]
 var draw_pile = []
 var hand = []
@@ -18,6 +19,9 @@ func _ready():
 		card_instance.connect("card_played", _on_card_card_played)
 		draw_pile.append(card_instance)
 	draw_cards(4)
+	shuffle_draw_pile()
+	if not GameState.instructions_seen:
+		instructions.visible = true
 	
 func draw_cards(amount):
 	for i in range(amount):
@@ -116,3 +120,8 @@ func _on_player_died():
 func _on_restart_button_pressed():
 	get_tree().paused = false
 	get_tree().reload_current_scene()
+
+
+func _on_continue_pressed():
+	instructions.visible = false
+	GameState.instructions_seen = true

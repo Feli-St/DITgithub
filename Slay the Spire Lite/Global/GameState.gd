@@ -3,6 +3,7 @@ extends Node
 @export var max_energy = 3
 var current_energy = max_energy
 signal energy_changed
+var instructions_seen = false
 
 func reset_energy():
 	current_energy = max_energy

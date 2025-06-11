@@ -88,9 +88,62 @@ offset_right = 578.0
 offset_bottom = 389.0
 text = "Restart"
 
+[node name="Instructions" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ColorRect" type="ColorRect" parent="Instructions"]
+z_index = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -3.0
+offset_top = -4.0
+offset_right = 1159.0
+offset_bottom = 662.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.615686)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Instructions"]
+z_index = 2
+layout_mode = 0
+offset_left = 250.0
+offset_top = 131.0
+offset_right = 896.0
+offset_bottom = 518.0
+mouse_filter = 1
+text = "Instructions:
+
+	-	Click on cards to play them
+	-	Cards need energy to play
+	-	Energy is reset each turn
+	-	Cards in hand are discarded each turn so don't hold onto them
+	-	Intention shows what the enemy plans to do in its turn"
+
+[node name="Button" type="Button" parent="Instructions"]
+z_index = 2
+layout_mode = 0
+offset_left = 295.0
+offset_top = 319.0
+offset_right = 420.0
+offset_bottom = 375.0
+mouse_filter = 1
+text = "Continue
+"
+
 [connection signal="attacked" from="Enemy" to="." method="_on_enemy_attacked"]
 [connection signal="enemy_defeated" from="Enemy" to="." method="_on_enemy_defeated"]
 [connection signal="died" from="Player" to="." method="_on_player_died"]
 [connection signal="turn_ended" from="HUD" to="." method="_on_turn_ended"]
 [connection signal="pressed" from="GameOverScreen/Button" to="." method="_on_restart_button_pressed"]
 [connection signal="pressed" from="VictoryScreen/Button" to="." method="_on_restart_button_pressed"]
+[connection signal="pressed" from="Instructions/Button" to="." method="_on_continue_pressed"]

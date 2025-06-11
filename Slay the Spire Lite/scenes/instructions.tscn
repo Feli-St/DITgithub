@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://pmg6bmr7bm7r"]
+[gd_scene load_steps=2 format=3 uid="uid://bd803mqp0iaqh"]
 
 [ext_resource type="Script" path="res://scripts/Instructions.gd" id="1_njgp4"]
 
@@ -12,10 +12,19 @@ grow_vertical = 2
 script = ExtResource("1_njgp4")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+visibility_layer = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 281.0
+offset_top = 148.0
+offset_right = -253.0
+offset_bottom = -153.0
+grow_horizontal = 2
+grow_vertical = 2
 text = "Instructions:
+
 	-	Click on cards to play them
 	-	Cards need energy to play
 	-	Energy is reset each turn
@@ -26,5 +35,21 @@ scroll_active = false
 
 [node name="StartButton" type="Button" parent="."]
 layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
+offset_left = 523.0
+offset_top = 365.0
+offset_right = 602.0
+offset_bottom = 396.0
+text = "Continue
+"
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.313726)
+
+[connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
