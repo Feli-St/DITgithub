@@ -1,0 +1,30 @@
+[gd_scene load_steps=2 format=3 uid="uid://pmg6bmr7bm7r"]
+
+[ext_resource type="Script" path="res://scripts/Instructions.gd" id="1_njgp4"]
+
+[node name="Instructions" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_njgp4")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+text = "Instructions:
+	-	Click on cards to play them
+	-	Cards need energy to play
+	-	Energy is reset each turn
+	-	Cards in hand are discarded each turn so don't hold onto them
+	-	Intention shows what the enemy plans to do in its turn"
+fit_content = true
+scroll_active = false
+
+[node name="StartButton" type="Button" parent="."]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0

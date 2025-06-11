@@ -9,10 +9,15 @@ signal died
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	current_health = max_health
-	health.text = str(current_health) + "/" + str(max_health) + "(" + str(block) + ")"
+	update_health()
+	
+func update_tooltip():
+	health.tooltip_text = "You have " + str(current_health) + " health and " + str(block) + " block"
 	
 func update_health():
 	health.text = str(current_health) + "/" + str(max_health) + "(" + str(block) + ")"
+	update_tooltip()
+	
 	
 func take_damage(damage):
 	if block < damage:
@@ -45,7 +50,4 @@ func die():
 	print("You lost!")
 	emit_signal("died")
 	queue_free()
-	
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+

@@ -14,8 +14,8 @@ func _ready():
 	$CardName.text = card_name
 	$Description.text = description
 	$Cost.text = str(cost)
+	$Cost.tooltip_text = "This card costs " + str(cost) + " energy to play"
 	
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass

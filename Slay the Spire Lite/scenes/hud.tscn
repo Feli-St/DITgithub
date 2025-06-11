@@ -24,6 +24,7 @@ offset_right = 20.0
 offset_bottom = 136.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 theme_override_font_sizes/font_size = 40
 text = "Test"
 horizontal_alignment = 1
@@ -31,10 +32,10 @@ vertical_alignment = 1
 
 [node name="Button" type="Button" parent="."]
 layout_mode = 0
-offset_left = 427.0
+offset_left = 388.0
 offset_top = 24.0
 offset_right = 505.0
-offset_bottom = 55.0
+offset_bottom = 86.0
 text = "End Turn"
 
 [node name="Draw_pile" type="Label" parent="."]
@@ -43,6 +44,7 @@ offset_left = 535.0
 offset_top = 96.0
 offset_right = 575.0
 offset_bottom = 119.0
+mouse_filter = 1
 text = "0
 "
 
@@ -52,6 +54,7 @@ offset_left = 625.0
 offset_top = 98.0
 offset_right = 665.0
 offset_bottom = 121.0
+mouse_filter = 1
 text = "0"
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

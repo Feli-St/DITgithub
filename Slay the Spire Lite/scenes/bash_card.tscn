@@ -7,3 +7,4 @@ card_name = "Bash"
 cost = 2
 damage = 15
 description = "Deal 15 damage"
+tooltip = ""

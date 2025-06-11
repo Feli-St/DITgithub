@@ -8,7 +8,10 @@ signal turn_ended()
 func _ready():
 	GameState.energy_changed.connect(update_energy)
 	update_energy()
-	pass # Replace with function body.
+	$Button.tooltip_text = "End your turn and start enemy turn"
+	draw_pile.tooltip_text = "Amount of cards in your draw pile"
+	discard_pile.tooltip_text = "Amount of cards in your discard pile"
+	
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -17,6 +20,7 @@ func _process(delta):
 
 func update_energy():
 	$Energy.text = "Energy: " + str(GameState.get_current_energy())
+	$Energy.tooltip_text = "You have " + str(GameState.current_energy) + " energy"
 
 func _on_button_pressed():
 	emit_signal("turn_ended")
