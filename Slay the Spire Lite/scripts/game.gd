@@ -3,6 +3,7 @@ extends Node2D
 @onready var enemy = $Enemy
 @onready var player = $Player
 @onready var GameState = $"/root/GameState"
+@onready var StatusManager = $"/root/StatusManager"
 @onready var hud = $HUD
 @onready var hand_ui = $Hand_ui/HBoxContainer
 @onready var GameOverScreen = $GameOverScreen
@@ -63,7 +64,7 @@ func discard_hand():
 func add_card_to_hand_ui(card):
 	hand_ui.add_child(card)
 
-func _on_card_card_played(damage, block, energy, cost, cards_to_draw, card):
+func _on_card_card_played(damage, block, energy, cost, cards_to_draw, status_effect, status_duration, card):
 	if cost <= GameState.get_current_energy():
 		if enemy:
 			if damage:
@@ -81,9 +82,10 @@ func _on_card_card_played(damage, block, energy, cost, cards_to_draw, card):
 			if cards_to_draw:
 				print("Card played for ", cards_to_draw, "cards")
 				draw_cards(cards_to_draw)
+			if status_effect:
+				StatusManager.apply_effect(status_effect, enemy, status_duration)
+				enemy.update_status()
 			discard_card(card)
-				
-	
 
 
 func _on_enemy_defeated():
@@ -94,11 +96,14 @@ func _on_enemy_defeated():
 func turn_start():
 	GameState.reset_energy()
 	player.reset_block()
+	StatusManager.lower_duration(enemy)
+	enemy.update_status()
 	draw_cards(4)
 	enemy.change_intention()
-	print(draw_pile)
-	print(hand)
-	print(discard_pile)
+	#print(draw_pile)
+	#print(hand)
+	#print(discard_pile)
+	print(enemy.status_effects)
 
 
 func _on_turn_ended():

@@ -4,7 +4,11 @@ extends Node2D
 var current_health 
 @onready var health = $Health
 @onready var intention_text = $Intention
+@onready var status_manager = $"/root/StatusManager"
+@onready var status_label = $Status
 var intention
+var damage
+var status_effects = {}
 
 signal enemy_defeated
 signal attacked(damage)
@@ -37,4 +41,11 @@ func update_health():
 	
 func attack():
 	print("Enemy attacked")
-	emit_signal("attacked", intention)
+	if status_manager.has_status("weak", self):
+		damage = status_manager.apply_weak_to_damage(intention)
+	emit_signal("attacked", damage)
+
+func update_status():
+	for status in status_effects:
+		status_label.text = str(status_effects.keys())
+	

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b6ni5hbyoii7y"]
+[gd_scene load_steps=14 format=3 uid="uid://b6ni5hbyoii7y"]
 
 [ext_resource type="PackedScene" uid="uid://dunj0l01fp4ij" path="res://scenes/card.tscn" id="1_8bvxw"]
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_buaqu"]
@@ -12,10 +12,11 @@
 [ext_resource type="PackedScene" uid="uid://dxnl40xda8y63" path="res://scenes/hand_ui.tscn" id="7_qtbnc"]
 [ext_resource type="PackedScene" uid="uid://ca472fdde3a4y" path="res://scenes/draw_card.tscn" id="7_uap7o"]
 [ext_resource type="PackedScene" uid="uid://dbs387sxkur86" path="res://scenes/energy_card.tscn" id="8_3sh4l"]
+[ext_resource type="PackedScene" uid="uid://cqko8833l8661" path="res://scenes/weak_card.tscn" id="9_3jkgs"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_buaqu")
-card_scenes = Array[PackedScene]([ExtResource("6_0hics"), ExtResource("6_0hics"), ExtResource("1_8bvxw"), ExtResource("6_0hics"), ExtResource("6_0hics"), ExtResource("1_8bvxw"), ExtResource("6_ywnbb"), ExtResource("4_xhfir"), ExtResource("5_ped4l"), ExtResource("7_uap7o"), ExtResource("8_3sh4l")])
+card_scenes = Array[PackedScene]([ExtResource("6_0hics"), ExtResource("6_0hics"), ExtResource("1_8bvxw"), ExtResource("6_0hics"), ExtResource("6_0hics"), ExtResource("1_8bvxw"), ExtResource("6_ywnbb"), ExtResource("4_xhfir"), ExtResource("5_ped4l"), ExtResource("7_uap7o"), ExtResource("8_3sh4l"), ExtResource("9_3jkgs")])
 
 [node name="Enemy" parent="." instance=ExtResource("3_wekco")]
 position = Vector2(955, 304)

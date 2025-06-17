@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://cqko8833l8661"]
+
+[ext_resource type="PackedScene" uid="uid://dunj0l01fp4ij" path="res://scenes/card.tscn" id="1_utoro"]
+
+[sub_resource type="GDScript" id="GDScript_i3jcb"]
+script/source = "extends \"res://scripts/card.gd\"
+
+@onready var status_manager = \"res://scripts/status_manager.gd\"
+@onready var enemy = \"res://scenes/enemy.tscn\"
+func _on_card_played():
+	super._on_card_clicked()
+	status_manager.apply_effect(\"weak\", enemy, )
+"
+
+[node name="WeakCard" instance=ExtResource("1_utoro")]
+script = SubResource("GDScript_i3jcb")
+card_name = "Weaken"
+damage = 4
+status_effect = "weak"
+status_duration = 2
+description = "Deal 4 damage and apply 2 weak"
