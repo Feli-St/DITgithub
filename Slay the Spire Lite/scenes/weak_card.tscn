@@ -15,7 +15,7 @@ func _on_card_played():
 [node name="WeakCard" instance=ExtResource("1_utoro")]
 script = SubResource("GDScript_i3jcb")
 card_name = "Weaken"
-damage = 4
+damage = 0
 status_effect = "weak"
 status_duration = 2
-description = "Deal 4 damage and apply 2 weak"
+description = "Apply 2 weak"

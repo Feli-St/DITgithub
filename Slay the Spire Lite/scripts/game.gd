@@ -19,8 +19,8 @@ func _ready():
 		var card_instance = card_scene.instantiate()
 		card_instance.connect("card_played", _on_card_card_played)
 		draw_pile.append(card_instance)
-	draw_cards(4)
 	shuffle_draw_pile()
+	draw_cards(4)
 	if not GameState.instructions_seen:
 		instructions.visible = true
 	
@@ -69,6 +69,8 @@ func _on_card_card_played(damage, block, energy, cost, cards_to_draw, status_eff
 		if enemy:
 			if damage:
 				print("Card played for ", damage, " damage")
+				if enemy.status_effects.has("vulnerable"):
+					damage = StatusManager.apply_vulnerable_to_damage(damage)
 				enemy.take_damage(damage)
 			if block:
 				print("Card played for ", block, " block")
@@ -94,16 +96,19 @@ func _on_enemy_defeated():
 	get_tree().paused = true
 
 func turn_start():
-	GameState.reset_energy()
-	player.reset_block()
-	StatusManager.lower_duration(enemy)
-	enemy.update_status()
-	draw_cards(4)
-	enemy.change_intention()
-	#print(draw_pile)
-	#print(hand)
-	#print(discard_pile)
-	print(enemy.status_effects)
+	if enemy:
+		GameState.reset_energy()
+		player.reset_block()
+		if enemy.status_effects.has("poison"):
+			enemy.take_damage(enemy.status_effects["poison"].duration)
+		StatusManager.lower_duration(enemy)
+		enemy.update_status()
+		draw_cards(4)
+		enemy.change_intention()
+		#print(draw_pile)
+		#print(hand)
+		#print(discard_pile)
+		print(enemy.status_effects)
 
 
 func _on_turn_ended():

@@ -2,6 +2,7 @@ extends Node2D
 
 @export var max_health = 50
 @onready var health = $Health
+@onready var StatusManager = $"/root/StatusManager"
 var current_health
 var block = 0
 var damage_taken

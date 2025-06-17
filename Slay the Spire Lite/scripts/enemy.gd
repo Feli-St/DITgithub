@@ -1,6 +1,6 @@
 extends Node2D
 
-@export var max_health = 50
+@export var max_health = 100
 var current_health 
 @onready var health = $Health
 @onready var intention_text = $Intention
@@ -20,7 +20,7 @@ func _ready():
 	change_intention()
 
 func change_intention():
-	intention = randi_range(5, 20)
+	intention = randi_range(10, 25)
 	intention_text.text = "Intention: " + str(intention) + " damage"
 	intention_text.tooltip_text = "The enemy intends to attack for " + str(intention) + " damage"
 
@@ -41,11 +41,17 @@ func update_health():
 	
 func attack():
 	print("Enemy attacked")
-	if status_manager.has_status("weak", self):
-		damage = status_manager.apply_weak_to_damage(intention)
-	emit_signal("attacked", damage)
+	if status_effects.has("weak"):
+		intention = status_manager.apply_weak_to_damage(intention)
+		print("Weak applied")
+	emit_signal("attacked", intention)
 
 func update_status():
-	for status in status_effects:
-		status_label.text = str(status_effects.keys())
+	var status_label_text = ""
+	if not status_effects.is_empty():
+		for status in status_effects:
+			status_label_text += (str(status) + " " + str(status_effects[status].duration)) + "\n"
+		status_label.text = status_label_text
+	else:
+		status_label.text = ""
 	

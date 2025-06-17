@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://3cdlp2y8ei8f"]
+
+[ext_resource type="PackedScene" uid="uid://dunj0l01fp4ij" path="res://scenes/card.tscn" id="1_27atn"]
+
+[node name="VulnerableCard" instance=ExtResource("1_27atn")]
+card_name = "Weakpoint"
+cost = 2
+damage = 4
+status_effect = "vulnerable"
+status_duration = 2
+description = "Deal 4 damage, apply 2 vulnerable"
