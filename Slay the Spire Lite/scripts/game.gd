@@ -10,19 +10,27 @@ extends Node2D
 @onready var VictoryScreen = $VictoryScreen
 @onready var instructions = $Instructions
 @export var card_scenes : Array[PackedScene]
+@export var deck : Array[PackedScene]
 var draw_pile = []
 var hand = []
 var discard_pile = []
+var encounter_level = 1
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	for card_scene in card_scenes:
+	for card_scene in deck:
 		var card_instance = card_scene.instantiate()
+		card_instance.add_to_group("cards")
 		card_instance.connect("card_played", _on_card_card_played)
+		card_instance.game = self
+		card_instance.enemy = enemy
+		card_instance.player = player
 		draw_pile.append(card_instance)
 	shuffle_draw_pile()
 	draw_cards(4)
 	if not GameState.instructions_seen:
 		instructions.visible = true
+	enemy.position = $EnemySpawnPoint.global_position
+	update_level()
 	
 func draw_cards(amount):
 	for i in range(amount):
@@ -63,6 +71,18 @@ func discard_hand():
 
 func add_card_to_hand_ui(card):
 	hand_ui.add_child(card)
+	
+func add_card_to_deck(card):
+	deck.append(card)
+	var card_instance = card.instantiate()
+	card_instance.connect("card_played", _on_card_card_played)
+	card_instance.game = self
+	card_instance.enemy = enemy
+	card_instance.player = player
+	draw_pile.append(card_instance)
+	
+func remove_card_from_deck(card):
+	deck.erase(card)
 
 func _on_card_card_played(damage, block, energy, cost, cards_to_draw, status_effect, status_duration, card):
 	if cost <= GameState.get_current_energy():
@@ -86,7 +106,8 @@ func _on_card_card_played(damage, block, energy, cost, cards_to_draw, status_eff
 				draw_cards(cards_to_draw)
 			if status_effect:
 				StatusManager.apply_effect(status_effect, enemy, status_duration)
-				enemy.update_status()
+				if enemy:
+					enemy.update_status()
 			discard_card(card)
 
 
@@ -94,21 +115,68 @@ func _on_enemy_defeated():
 	enemy = null
 	VictoryScreen.visible = true
 	get_tree().paused = true
+	var reward_cards = []
+	for i in range(3):
+		var card_scene
+		while true:
+			card_scene = card_scenes.pick_random()
+			if card_scene not in reward_cards:
+				reward_cards.append(card_scene)
+				break
+		var card = card_scene.instantiate()
+		card.is_reward_card = true
+		card.connect("chosen_as_reward_card", _on_reward_card_chosen)
+		$VictoryScreen/RewardCards.add_child(card)
+	
+func _on_reward_card_chosen(card):
+	var scene_path = card.scene_file_path
+	var packed_scene = load(scene_path) as PackedScene
+	add_card_to_deck(packed_scene)
+	card.is_reward_card = false
+	print("Reward card added to deck")
+	start_next_encounter()
+
+func start_next_encounter():
+	VictoryScreen.visible = false
+	for child in $VictoryScreen/RewardCards.get_children():
+		$VictoryScreen/RewardCards.remove_child(child)
+	get_tree().paused = false
+	discard_hand()
+	reshuffle()
+	shuffle_draw_pile()
+	encounter_level += 1
+	update_level()
+	
+	enemy = preload("res://scenes/enemy.tscn").instantiate()
+	enemy.max_health += encounter_level * 2
+	enemy.intention_min += encounter_level 
+	enemy.intention_max += encounter_level 
+	enemy.position = $EnemySpawnPoint.global_position
+	add_child(enemy)
+	enemy.connect("attacked", _on_enemy_attacked)
+	enemy.connect("enemy_defeated", _on_enemy_defeated)
+	for card in draw_pile:
+		card.enemy = enemy
+	
+	turn_start()
 
 func turn_start():
 	if enemy:
 		GameState.reset_energy()
-		player.reset_block()
+		if player:
+			player.reset_block()
 		if enemy.status_effects.has("poison"):
 			enemy.take_damage(enemy.status_effects["poison"].duration)
 		StatusManager.lower_duration(enemy)
-		enemy.update_status()
+		if enemy:
+			enemy.update_status()
+			enemy.change_intention()
+			print(enemy.status_effects)
 		draw_cards(4)
-		enemy.change_intention()
 		#print(draw_pile)
 		#print(hand)
 		#print(discard_pile)
-		print(enemy.status_effects)
+		
 
 
 func _on_turn_ended():
@@ -124,14 +192,22 @@ func _on_enemy_attacked(damage):
 
 func _on_player_died():
 	GameOverScreen.visible = true
+	player = null
+	$GameOverScreen/Label2.text = "You got to level " + str(encounter_level)
 	get_tree().paused = true
-
-
+	
 func _on_restart_button_pressed():
 	get_tree().paused = false
 	get_tree().reload_current_scene()
+
+func _on_skip_button_pressed():
+	player.gain_health(25)
+	start_next_encounter()
 
 
 func _on_continue_pressed():
 	instructions.visible = false
 	GameState.instructions_seen = true
+
+func update_level():
+	$Level.text = "Current level: " + str(encounter_level)

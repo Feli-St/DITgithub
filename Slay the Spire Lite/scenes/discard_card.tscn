@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://0pqbvupbus8l"]
+
+[ext_resource type="PackedScene" uid="uid://dunj0l01fp4ij" path="res://scenes/card.tscn" id="1_qayjg"]
+[ext_resource type="Script" path="res://scripts/discard_card.gd" id="2_808u3"]
+
+[node name="DiscardCard" instance=ExtResource("1_qayjg")]
+script = ExtResource("2_808u3")
+card_name = "Discard"
+damage = 0
+cards_to_draw = 4
+description = "Discard hand and draw 4 cards"

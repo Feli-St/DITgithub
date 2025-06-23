@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://70in4ysrcdfi"]
+
+[ext_resource type="PackedScene" uid="uid://dunj0l01fp4ij" path="res://scenes/card.tscn" id="1_u5g63"]
+[ext_resource type="Script" path="res://scripts/cheap_poison_card.gd" id="2_rcdtg"]
+
+[node name="CheapPoisonCard" instance=ExtResource("1_u5g63")]
+script = ExtResource("2_rcdtg")
+card_name = "Poison"
+damage = 0
+description = "Double poison"

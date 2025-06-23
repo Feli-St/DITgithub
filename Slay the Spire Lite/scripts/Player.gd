@@ -37,6 +37,10 @@ func take_damage(damage):
 		die()
 	update_health()
 	
+func gain_health(amount):
+	current_health = min(current_health + amount, max_health)
+	
+	
 func apply_block(block_added):
 	block += block_added
 	print(block_added, "added to block")

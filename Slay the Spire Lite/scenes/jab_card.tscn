@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://w6jtsml5cx3m"]
+
+[ext_resource type="PackedScene" uid="uid://dunj0l01fp4ij" path="res://scenes/card.tscn" id="1_npxxa"]
+
+[node name="JabCard" instance=ExtResource("1_npxxa")]
+card_name = "Jab"
+cost = 0
+damage = 4
+description = "Deal 4 damage"

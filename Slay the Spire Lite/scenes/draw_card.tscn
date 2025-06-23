@@ -6,4 +6,6 @@
 card_name = "Plan"
 damage = 0
 cards_to_draw = 2
-description = "Draw 2 cards"
+status_effect = "vulnerable"
+status_duration = 1
+description = "Draw 2 cards and apply 1 vulnerable"

@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://bymfvbwwbhebn"]
+
+[ext_resource type="PackedScene" uid="uid://dunj0l01fp4ij" path="res://scenes/card.tscn" id="1_182as"]
+[ext_resource type="Script" path="res://scripts/PoisonDamageCard.gd" id="2_uwv6r"]
+
+[node name="PoisonDamageCard" instance=ExtResource("1_182as")]
+script = ExtResource("2_uwv6r")
+card_name = "Venom"
+cost = 0
+damage = 0
+description = "Deal damage equal to poison"

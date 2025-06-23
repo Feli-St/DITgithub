@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://b6ni5hbyoii7y"]
+[gd_scene load_steps=22 format=3 uid="uid://b6ni5hbyoii7y"]
 
 [ext_resource type="PackedScene" uid="uid://dunj0l01fp4ij" path="res://scenes/card.tscn" id="1_8bvxw"]
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_buaqu"]
@@ -15,16 +15,34 @@
 [ext_resource type="PackedScene" uid="uid://cqko8833l8661" path="res://scenes/weak_card.tscn" id="9_3jkgs"]
 [ext_resource type="PackedScene" uid="uid://3cdlp2y8ei8f" path="res://scenes/vulnerable_card.tscn" id="10_lfte1"]
 [ext_resource type="PackedScene" uid="uid://b68ryb7ggov60" path="res://scenes/poison_card.tscn" id="11_evyyq"]
+[ext_resource type="PackedScene" uid="uid://w6jtsml5cx3m" path="res://scenes/jab_card.tscn" id="12_xbp1y"]
+[ext_resource type="PackedScene" uid="uid://b8iklebrymolk" path="res://scenes/guard_card.tscn" id="13_hatmt"]
+[ext_resource type="PackedScene" uid="uid://0pqbvupbus8l" path="res://scenes/discard_card.tscn" id="14_5rj5m"]
+[ext_resource type="PackedScene" uid="uid://bymfvbwwbhebn" path="res://scenes/poison_damage_card.tscn" id="15_h3eut"]
+[ext_resource type="PackedScene" uid="uid://wsvrol5dmpbs" path="res://scenes/scaling_card.tscn" id="16_q8ad0"]
+[ext_resource type="PackedScene" uid="uid://70in4ysrcdfi" path="res://scenes/cheap_poison_card.tscn" id="16_sj235"]
 
-[node name="Game" type="Node2D"]
+[node name="Game" type="Node2D" groups=["cards"]]
 script = ExtResource("1_buaqu")
-card_scenes = Array[PackedScene]([ExtResource("6_0hics"), ExtResource("6_0hics"), ExtResource("1_8bvxw"), ExtResource("6_0hics"), ExtResource("6_0hics"), ExtResource("1_8bvxw"), ExtResource("6_ywnbb"), ExtResource("4_xhfir"), ExtResource("5_ped4l"), ExtResource("7_uap7o"), ExtResource("8_3sh4l"), ExtResource("9_3jkgs"), ExtResource("10_lfte1"), ExtResource("11_evyyq")])
+card_scenes = Array[PackedScene]([ExtResource("6_0hics"), ExtResource("1_8bvxw"), ExtResource("6_ywnbb"), ExtResource("4_xhfir"), ExtResource("5_ped4l"), ExtResource("7_uap7o"), ExtResource("8_3sh4l"), ExtResource("9_3jkgs"), ExtResource("10_lfte1"), ExtResource("11_evyyq"), ExtResource("12_xbp1y"), ExtResource("13_hatmt"), ExtResource("14_5rj5m"), ExtResource("15_h3eut"), ExtResource("16_q8ad0")])
+deck = Array[PackedScene]([ExtResource("4_xhfir"), ExtResource("1_8bvxw"), ExtResource("6_0hics"), ExtResource("10_lfte1"), ExtResource("1_8bvxw"), ExtResource("6_0hics"), ExtResource("1_8bvxw"), ExtResource("6_0hics"), ExtResource("1_8bvxw"), ExtResource("6_0hics"), ExtResource("14_5rj5m"), ExtResource("11_evyyq"), ExtResource("15_h3eut"), ExtResource("16_sj235"), ExtResource("16_q8ad0")])
+
+[node name="EnemySpawnPoint" type="Marker2D" parent="."]
+position = Vector2(959, 297)
 
 [node name="Enemy" parent="." instance=ExtResource("3_wekco")]
 position = Vector2(955, 304)
 
 [node name="Player" parent="." instance=ExtResource("4_4ce86")]
 position = Vector2(107, 203)
+
+[node name="Level" type="Label" parent="."]
+offset_left = 530.0
+offset_top = 37.0
+offset_right = 570.0
+offset_bottom = 60.0
+text = "Current level: 1"
+horizontal_alignment = 1
 
 [node name="HUD" parent="." instance=ExtResource("5_68x20")]
 offset_left = 334.0
@@ -47,7 +65,22 @@ offset_right = 40.0
 offset_bottom = 40.0
 metadata/_edit_group_ = true
 
+[node name="ColorRect3" type="ColorRect" parent="GameOverScreen"]
+z_index = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -3.0
+offset_top = -4.0
+offset_right = 1159.0
+offset_bottom = 662.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.615686)
+
 [node name="Label" type="Label" parent="GameOverScreen"]
+z_index = 2
 layout_mode = 0
 offset_left = 445.0
 offset_top = 237.0
@@ -56,13 +89,23 @@ offset_bottom = 306.0
 theme_override_font_sizes/font_size = 50
 text = "YOU LOST"
 
+[node name="Label2" type="Label" parent="GameOverScreen"]
+z_index = 2
+layout_mode = 0
+offset_left = 506.0
+offset_top = 327.0
+offset_right = 546.0
+offset_bottom = 350.0
+horizontal_alignment = 1
+
 [node name="Button" type="Button" parent="GameOverScreen"]
 process_mode = 3
+z_index = 2
 layout_mode = 0
-offset_left = 542.0
-offset_top = 316.0
-offset_right = 607.0
-offset_bottom = 347.0
+offset_left = 539.0
+offset_top = 382.0
+offset_right = 604.0
+offset_bottom = 413.0
 text = "Restart"
 
 [node name="VictoryScreen" type="Control" parent="."]
@@ -73,7 +116,22 @@ offset_right = 40.0
 offset_bottom = 40.0
 metadata/_edit_group_ = true
 
+[node name="ColorRect2" type="ColorRect" parent="VictoryScreen"]
+z_index = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -3.0
+offset_top = -4.0
+offset_right = 1159.0
+offset_bottom = 662.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.615686)
+
 [node name="Label" type="Label" parent="VictoryScreen"]
+z_index = 1
 layout_mode = 0
 offset_left = 428.0
 offset_top = 272.0
@@ -84,12 +142,23 @@ text = "YOU WON"
 
 [node name="Button" type="Button" parent="VictoryScreen"]
 process_mode = 3
+z_index = 1
 layout_mode = 0
 offset_left = 513.0
 offset_top = 358.0
 offset_right = 578.0
 offset_bottom = 389.0
-text = "Restart"
+text = "Skip"
+
+[node name="RewardCards" type="HBoxContainer" parent="VictoryScreen"]
+process_mode = 3
+z_index = 1
+layout_mode = 0
+offset_left = 526.0
+offset_top = 118.0
+offset_right = 566.0
+offset_bottom = 158.0
+alignment = 1
 
 [node name="Instructions" type="Control" parent="."]
 visible = false
@@ -148,5 +217,5 @@ text = "Continue
 [connection signal="died" from="Player" to="." method="_on_player_died"]
 [connection signal="turn_ended" from="HUD" to="." method="_on_turn_ended"]
 [connection signal="pressed" from="GameOverScreen/Button" to="." method="_on_restart_button_pressed"]
-[connection signal="pressed" from="VictoryScreen/Button" to="." method="_on_restart_button_pressed"]
+[connection signal="pressed" from="VictoryScreen/Button" to="." method="_on_skip_button_pressed"]
 [connection signal="pressed" from="Instructions/Button" to="." method="_on_continue_pressed"]

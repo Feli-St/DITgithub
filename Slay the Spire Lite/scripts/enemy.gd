@@ -1,11 +1,13 @@
 extends Node2D
 
-@export var max_health = 100
+@export var max_health = 30
 var current_health 
 @onready var health = $Health
 @onready var intention_text = $Intention
 @onready var status_manager = $"/root/StatusManager"
 @onready var status_label = $Status
+var intention_min = 0
+var intention_max = 10
 var intention
 var damage
 var status_effects = {}
@@ -20,7 +22,7 @@ func _ready():
 	change_intention()
 
 func change_intention():
-	intention = randi_range(10, 25)
+	intention = randi_range(intention_min, intention_max)
 	intention_text.text = "Intention: " + str(intention) + " damage"
 	intention_text.tooltip_text = "The enemy intends to attack for " + str(intention) + " damage"
 

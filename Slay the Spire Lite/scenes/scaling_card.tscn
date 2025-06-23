@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://wsvrol5dmpbs"]
+
+[ext_resource type="PackedScene" uid="uid://dunj0l01fp4ij" path="res://scenes/card.tscn" id="1_vr78g"]
+[ext_resource type="Script" path="res://scripts/ScalingCard.gd" id="2_k577f"]
+
+[node name="ScalingCard" instance=ExtResource("1_vr78g")]
+script = ExtResource("2_k577f")
+card_name = "Charge"
+cost = 2
+damage = 8
+description = ""

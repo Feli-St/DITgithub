@@ -4,7 +4,6 @@
 
 [node name="PoisonCard" instance=ExtResource("1_5q4c1")]
 card_name = "Poison"
-cost = 2
 status_effect = "poison"
 status_duration = 5
 description = "Deal 6 damage, apply 5 poison"
