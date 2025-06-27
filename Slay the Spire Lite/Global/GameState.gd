@@ -4,7 +4,8 @@ extends Node
 var current_energy = max_energy
 signal energy_changed
 var instructions_seen = false
-
+var highscore = 0
+var scaling_damage = 10
 func reset_energy():
 	current_energy = max_energy
 	emit_signal("energy_changed")

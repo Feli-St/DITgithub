@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://dp7cg57ghjhbk"]
+
+[ext_resource type="PackedScene" uid="uid://dunj0l01fp4ij" path="res://scenes/card.tscn" id="1_83070"]
+[ext_resource type="Script" path="res://scripts/EnergizedCard.gd" id="2_aa70e"]
+
+[node name="EnergizedCard" instance=ExtResource("1_83070")]
+script = ExtResource("2_aa70e")
+card_name = "Energized"
+damage = 0
+block = 8
+description = "Gain 8 block, gain 1 energy next turn"

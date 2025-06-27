@@ -7,5 +7,5 @@
 script = ExtResource("2_k577f")
 card_name = "Charge"
 cost = 2
-damage = 8
+damage = 10
 description = ""

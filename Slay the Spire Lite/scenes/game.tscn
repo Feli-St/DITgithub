@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://b6ni5hbyoii7y"]
+[gd_scene load_steps=25 format=3 uid="uid://b6ni5hbyoii7y"]
 
 [ext_resource type="PackedScene" uid="uid://dunj0l01fp4ij" path="res://scenes/card.tscn" id="1_8bvxw"]
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_buaqu"]
@@ -20,27 +20,37 @@
 [ext_resource type="PackedScene" uid="uid://0pqbvupbus8l" path="res://scenes/discard_card.tscn" id="14_5rj5m"]
 [ext_resource type="PackedScene" uid="uid://bymfvbwwbhebn" path="res://scenes/poison_damage_card.tscn" id="15_h3eut"]
 [ext_resource type="PackedScene" uid="uid://wsvrol5dmpbs" path="res://scenes/scaling_card.tscn" id="16_q8ad0"]
-[ext_resource type="PackedScene" uid="uid://70in4ysrcdfi" path="res://scenes/cheap_poison_card.tscn" id="16_sj235"]
+[ext_resource type="PackedScene" uid="uid://b2cp3vactf38p" path="res://scenes/exploit_card.tscn" id="17_0k0ro"]
+[ext_resource type="PackedScene" uid="uid://dp7cg57ghjhbk" path="res://scenes/energized_card.tscn" id="18_85jlu"]
+[ext_resource type="PackedScene" uid="uid://70in4ysrcdfi" path="res://scenes/cheap_poison_card.tscn" id="19_1ddyg"]
+[ext_resource type="PackedScene" uid="uid://cfl7edkfd1n7p" path="res://scenes/followup_card.tscn" id="20_yxbgn"]
 
 [node name="Game" type="Node2D" groups=["cards"]]
 script = ExtResource("1_buaqu")
-card_scenes = Array[PackedScene]([ExtResource("6_0hics"), ExtResource("1_8bvxw"), ExtResource("6_ywnbb"), ExtResource("4_xhfir"), ExtResource("5_ped4l"), ExtResource("7_uap7o"), ExtResource("8_3sh4l"), ExtResource("9_3jkgs"), ExtResource("10_lfte1"), ExtResource("11_evyyq"), ExtResource("12_xbp1y"), ExtResource("13_hatmt"), ExtResource("14_5rj5m"), ExtResource("15_h3eut"), ExtResource("16_q8ad0")])
-deck = Array[PackedScene]([ExtResource("4_xhfir"), ExtResource("1_8bvxw"), ExtResource("6_0hics"), ExtResource("10_lfte1"), ExtResource("1_8bvxw"), ExtResource("6_0hics"), ExtResource("1_8bvxw"), ExtResource("6_0hics"), ExtResource("1_8bvxw"), ExtResource("6_0hics"), ExtResource("14_5rj5m"), ExtResource("11_evyyq"), ExtResource("15_h3eut"), ExtResource("16_sj235"), ExtResource("16_q8ad0")])
+card_scenes = Array[PackedScene]([ExtResource("6_0hics"), ExtResource("1_8bvxw"), ExtResource("6_ywnbb"), ExtResource("4_xhfir"), ExtResource("5_ped4l"), ExtResource("7_uap7o"), ExtResource("8_3sh4l"), ExtResource("9_3jkgs"), ExtResource("10_lfte1"), ExtResource("11_evyyq"), ExtResource("12_xbp1y"), ExtResource("13_hatmt"), ExtResource("14_5rj5m"), ExtResource("15_h3eut"), ExtResource("16_q8ad0"), ExtResource("17_0k0ro"), ExtResource("18_85jlu"), ExtResource("19_1ddyg"), ExtResource("20_yxbgn")])
+deck = Array[PackedScene]([ExtResource("4_xhfir"), ExtResource("1_8bvxw"), ExtResource("6_0hics"), ExtResource("10_lfte1"), ExtResource("1_8bvxw"), ExtResource("6_0hics"), ExtResource("1_8bvxw"), ExtResource("6_0hics"), ExtResource("1_8bvxw"), ExtResource("6_0hics"), ExtResource("14_5rj5m"), ExtResource("11_evyyq"), ExtResource("18_85jlu")])
 
 [node name="EnemySpawnPoint" type="Marker2D" parent="."]
-position = Vector2(959, 297)
+position = Vector2(936, 272)
 
 [node name="Enemy" parent="." instance=ExtResource("3_wekco")]
-position = Vector2(955, 304)
+position = Vector2(936, 272)
 
 [node name="Player" parent="." instance=ExtResource("4_4ce86")]
-position = Vector2(107, 203)
+position = Vector2(128, 192)
+scale = Vector2(1.17, 1)
+
+[node name="Highscore" type="Label" parent="."]
+offset_left = 513.0
+offset_top = 64.0
+offset_right = 553.0
+offset_bottom = 87.0
 
 [node name="Level" type="Label" parent="."]
-offset_left = 530.0
-offset_top = 37.0
-offset_right = 570.0
-offset_bottom = 60.0
+offset_left = 513.0
+offset_top = 32.0
+offset_right = 631.0
+offset_bottom = 55.0
 text = "Current level: 1"
 horizontal_alignment = 1
 
@@ -52,10 +62,10 @@ offset_bottom = 452.0
 metadata/_edit_group_ = true
 
 [node name="Hand_ui" parent="." instance=ExtResource("7_qtbnc")]
-offset_left = 294.0
-offset_top = 219.0
-offset_right = 294.0
-offset_bottom = 219.0
+offset_left = 334.0
+offset_top = 192.0
+offset_right = 334.0
+offset_bottom = 192.0
 
 [node name="GameOverScreen" type="Control" parent="."]
 visible = false
@@ -114,7 +124,6 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-metadata/_edit_group_ = true
 
 [node name="ColorRect2" type="ColorRect" parent="VictoryScreen"]
 z_index = 1
@@ -144,20 +153,28 @@ text = "YOU WON"
 process_mode = 3
 z_index = 1
 layout_mode = 0
-offset_left = 513.0
-offset_top = 358.0
-offset_right = 578.0
-offset_bottom = 389.0
-text = "Skip"
+offset_left = 504.0
+offset_top = 352.0
+offset_right = 607.0
+offset_bottom = 394.0
+text = "Heal"
+
+[node name="ColorRect" type="ColorRect" parent="VictoryScreen"]
+z_index = 1
+layout_mode = 2
+offset_left = 452.0
+offset_top = 128.0
+offset_right = 452.0
+offset_bottom = 168.0
 
 [node name="RewardCards" type="HBoxContainer" parent="VictoryScreen"]
 process_mode = 3
-z_index = 1
+z_index = 2
 layout_mode = 0
-offset_left = 526.0
-offset_top = 118.0
-offset_right = 566.0
-offset_bottom = 158.0
+offset_left = 432.0
+offset_top = 128.0
+offset_right = 472.0
+offset_bottom = 168.0
 alignment = 1
 
 [node name="Instructions" type="Control" parent="."]

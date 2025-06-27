@@ -7,5 +7,4 @@
 script = ExtResource("2_808u3")
 card_name = "Discard"
 damage = 0
-cards_to_draw = 4
 description = "Discard hand and draw 4 cards"

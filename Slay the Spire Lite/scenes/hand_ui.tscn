@@ -12,8 +12,5 @@ size_flags_vertical = 3
 metadata/_edit_group_ = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
-layout_direction = 2
 layout_mode = 0
-offset_right = 530.0
-offset_bottom = 133.0
 alignment = 1

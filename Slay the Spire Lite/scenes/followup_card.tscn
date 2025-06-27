@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://cfl7edkfd1n7p"]
+
+[ext_resource type="PackedScene" uid="uid://dunj0l01fp4ij" path="res://scenes/card.tscn" id="1_olt3x"]
+[ext_resource type="Script" path="res://scripts/FollowupCard.gd" id="2_2a8hv"]
+
+[node name="FollowupCard" instance=ExtResource("1_olt3x")]
+script = ExtResource("2_2a8hv")
+card_name = "Follow up"
+damage = 0
+description = "Deal 5 damage for every card played"

@@ -2,7 +2,9 @@ extends Node2D
 
 @export var max_health = 50
 @onready var health = $Health
+@onready var status_label = $Status
 @onready var StatusManager = $"/root/StatusManager"
+var status_effects = {}
 var current_health
 var block = 0
 var damage_taken
@@ -56,3 +58,11 @@ func die():
 	emit_signal("died")
 	queue_free()
 
+func update_status():
+	var status_label_text = ""
+	if not status_effects.is_empty():
+		for status in status_effects:
+			status_label_text += (str(status) + " " + str(status_effects[status].duration)) + "\n"
+		status_label.text = status_label_text
+	else:
+		status_label.text = ""

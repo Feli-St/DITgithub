@@ -6,19 +6,28 @@
 position = Vector2(531, 236)
 scale = Vector2(2.48, 2.12)
 script = ExtResource("1_mvbhk")
-metadata/_edit_group_ = true
 
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="ColorRect" type="ColorRect" parent="."]
 z_index = -1
-offset_right = 40.0
-offset_bottom = 66.0
+offset_right = 79.0
+offset_bottom = 152.0
+metadata/_edit_use_anchors_ = true
 
 [node name="Health" type="Label" parent="."]
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = 5.0
+offset_top = 6.0
+offset_right = 76.0
+offset_bottom = 29.0
 tooltip_text = "test"
 mouse_filter = 1
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 15
+horizontal_alignment = 1
+
+[node name="Status" type="Label" parent="."]
+offset_left = 87.0968
+offset_top = 5.66038
+offset_right = 117.097
+offset_bottom = 22.6604
+metadata/_edit_use_anchors_ = true

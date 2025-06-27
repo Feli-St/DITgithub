@@ -11,6 +11,7 @@ extends Node2D
 @onready var instructions = $Instructions
 @export var card_scenes : Array[PackedScene]
 @export var deck : Array[PackedScene]
+var cards_played_this_turn = 0
 var draw_pile = []
 var hand = []
 var discard_pile = []
@@ -18,19 +19,29 @@ var encounter_level = 1
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	for card_scene in deck:
-		var card_instance = card_scene.instantiate()
-		card_instance.add_to_group("cards")
-		card_instance.connect("card_played", _on_card_card_played)
-		card_instance.game = self
-		card_instance.enemy = enemy
-		card_instance.player = player
-		draw_pile.append(card_instance)
+		draw_pile.append(card_scene)
 	shuffle_draw_pile()
 	draw_cards(4)
 	if not GameState.instructions_seen:
 		instructions.visible = true
 	enemy.position = $EnemySpawnPoint.global_position
 	update_level()
+	update_highscore()
+	
+func instantiate_card(card):
+	if card:
+		var card_instance = card.instantiate()
+		card_instance.add_to_group("cards")
+		card_instance.connect("card_played", _on_card_card_played)
+		card_instance.game = self
+		card_instance.enemy = enemy
+		card_instance.player = player
+		return card_instance
+	
+func convert_to_packed_scene(card_instance):
+	var file_path = card_instance.scene_file_path
+	var packed_scene = load(file_path) as PackedScene
+	return packed_scene
 	
 func draw_cards(amount):
 	for i in range(amount):
@@ -40,17 +51,20 @@ func draw_cards(amount):
 		if draw_pile.is_empty():
 			return
 		var card = draw_pile.pop_back()
-		hand.append(card)
-		add_card_to_hand_ui(card)
+		var card_instance = instantiate_card(card)
+		hand.append(card_instance)
+		add_card_to_hand_ui(card_instance)
 		print(card, "drawn")
 	hud.update_piles(len(draw_pile), len(discard_pile))
 	
-func discard_card(card):
-	hand.erase(card)
-	discard_pile.append(card)
-	print(card, "discarded")
-	hand_ui.remove_child(card)
-	hud.update_piles(len(draw_pile), len(discard_pile))
+func discard_card(card_instance):
+	if card_instance in hand:
+		hand.erase(card_instance)
+		var card = convert_to_packed_scene(card_instance)
+		discard_pile.append(card)
+		print(card, "discarded")
+		hand_ui.remove_child(card_instance)
+		hud.update_piles(len(draw_pile), len(discard_pile))
 	
 	
 func reshuffle():
@@ -74,12 +88,7 @@ func add_card_to_hand_ui(card):
 	
 func add_card_to_deck(card):
 	deck.append(card)
-	var card_instance = card.instantiate()
-	card_instance.connect("card_played", _on_card_card_played)
-	card_instance.game = self
-	card_instance.enemy = enemy
-	card_instance.player = player
-	draw_pile.append(card_instance)
+	draw_pile.append(card)
 	
 func remove_card_from_deck(card):
 	deck.erase(card)
@@ -109,24 +118,26 @@ func _on_card_card_played(damage, block, energy, cost, cards_to_draw, status_eff
 				if enemy:
 					enemy.update_status()
 			discard_card(card)
+			cards_played_this_turn += 1
 
 
 func _on_enemy_defeated():
-	enemy = null
-	VictoryScreen.visible = true
-	get_tree().paused = true
-	var reward_cards = []
-	for i in range(3):
-		var card_scene
-		while true:
-			card_scene = card_scenes.pick_random()
-			if card_scene not in reward_cards:
-				reward_cards.append(card_scene)
-				break
-		var card = card_scene.instantiate()
-		card.is_reward_card = true
-		card.connect("chosen_as_reward_card", _on_reward_card_chosen)
-		$VictoryScreen/RewardCards.add_child(card)
+	if $GameOverScreen.visible == false:
+		enemy = null
+		VictoryScreen.visible = true
+		get_tree().paused = true
+		var reward_cards = []
+		for i in range(3):
+			var card_scene
+			while true:
+				card_scene = card_scenes.pick_random()
+				if card_scene not in reward_cards:
+					reward_cards.append(card_scene)
+					break
+			var card = card_scene.instantiate()
+			card.is_reward_card = true
+			card.connect("chosen_as_reward_card", _on_reward_card_chosen)
+			$VictoryScreen/RewardCards.add_child(card)
 	
 func _on_reward_card_chosen(card):
 	var scene_path = card.scene_file_path
@@ -144,6 +155,7 @@ func start_next_encounter():
 	discard_hand()
 	reshuffle()
 	shuffle_draw_pile()
+	player.status_effects.clear()
 	encounter_level += 1
 	update_level()
 	
@@ -155,9 +167,11 @@ func start_next_encounter():
 	add_child(enemy)
 	enemy.connect("attacked", _on_enemy_attacked)
 	enemy.connect("enemy_defeated", _on_enemy_defeated)
-	for card in draw_pile:
-		card.enemy = enemy
 	
+	if encounter_level > GameState.highscore:
+		GameState.highscore = encounter_level
+		update_highscore()
+		
 	turn_start()
 
 func turn_start():
@@ -165,9 +179,14 @@ func turn_start():
 		GameState.reset_energy()
 		if player:
 			player.reset_block()
+			if player.status_effects.has("energized"):
+				GameState.gain_energy(1)
 		if enemy.status_effects.has("poison"):
 			enemy.take_damage(enemy.status_effects["poison"].duration)
 		StatusManager.lower_duration(enemy)
+		StatusManager.lower_duration(player)
+		if player:
+			player.update_status()
 		if enemy:
 			enemy.update_status()
 			enemy.change_intention()
@@ -180,6 +199,8 @@ func turn_start():
 
 
 func _on_turn_ended():
+	print("Cards played this turn: ", cards_played_this_turn)
+	cards_played_this_turn = 0
 	print("Turn ended")
 	if enemy:
 		enemy.attack()
@@ -201,7 +222,7 @@ func _on_restart_button_pressed():
 	get_tree().reload_current_scene()
 
 func _on_skip_button_pressed():
-	player.gain_health(25)
+	player.gain_health(10)
 	start_next_encounter()
 
 
@@ -211,3 +232,6 @@ func _on_continue_pressed():
 
 func update_level():
 	$Level.text = "Current level: " + str(encounter_level)
+	
+func update_highscore():
+	$Highscore.text = "HIGHSCORE: " + str(GameState.highscore)

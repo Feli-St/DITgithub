@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://dunj0l01fp4ij" path="res://scenes/card.tscn" id="1_5q4c1"]
 
 [node name="PoisonCard" instance=ExtResource("1_5q4c1")]
-card_name = "Poison"
+card_name = "Pois. dagger"
 status_effect = "poison"
 status_duration = 5
 description = "Deal 6 damage, apply 5 poison"

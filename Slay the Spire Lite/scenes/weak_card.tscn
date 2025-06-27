@@ -16,5 +16,5 @@ script = SubResource("GDScript_i3jcb")
 card_name = "Weaken"
 damage = 0
 status_effect = "weak"
-status_duration = 2
-description = "Apply 2 weak"
+status_duration = 3
+description = "Apply 3 weak"
